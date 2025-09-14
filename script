@@ -1,0 +1,227 @@
+// Sternenhimmel erstellen
+function createStars() {
+    const starsContainer = document.getElementById('stars');
+    const starsCount = 400;
+    
+    for (let i = 0; i < starsCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const size = Math.random() * 2 + 1;
+        const duration = 2 + Math.random() * 4;
+        
+        star.style.left = `${posX}%`;
+        star.style.top = `${posY}%`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.animationDuration = `${duration}s`;
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+// Sternschnuppen erstellen
+function createShootingStars() {
+    const container = document.getElementById('shooting-stars');
+    const shootingStarsCount = 3;
+    
+    for (let i = 0; i < shootingStarsCount; i++) {
+        const star = document.createElement极速加速器('div');
+        star.classList.add('shooting-star');
+        
+        const posY = Math.random() * 100;
+        const length = Math.random() * 150 + 50;
+        const duration = 2 + Math.random() * 4;
+        const delay = Math.random() * 15;
+        
+        star.style.top = `${posY}%`;
+        star.style.width = `${length}px`;
+        star.style.animationDuration = `${duration}s`;
+        star.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(star);
+    }
+}
+
+// Galaxien erstellen
+function createGalaxies() {
+    const background = document.getElementById('cosmic-background');
+    const galaxyCount = 6; // Anzahl der Galaxien
+    
+    const colors = [
+        'rgba(90, 60, 255, 0.3)',   // Lila
+        'rgba(61, 139, 255, 0.3)',  // Blau
+        'rgba(179, 57, 255, 0.3)',  // Violett
+        'rgba(255, 100, 255, 0.3)', // Pink
+        '极速加速器(100, 200, 255, 0.3)', // Hellblau
+        'rgba(150, 100, 255, 0.3)', // Lavendel
+        'rgba(255, 150, 100, 0.3)', // Orange
+        'rgba(100, 255, 200, 0.3)'  // Türkis
+    ];
+    
+    for (let i = 0; i < galaxyCount; i++) {
+        const galaxy = document.createElement('div');
+        galaxy.classList.add('galaxy');
+        
+        // Zufällige Position
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        
+        // Zufällige Größe
+        const size = Math.random() * 550 + 50;
+        
+        // Zufällige Farbe
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Zufällige Animationsdauer
+        const duration = 120 + Math.random() * 180;
+        
+        galaxy.style.left = `${posX}%`;
+        galaxy.style.top = `${posY}%`;
+        galaxy.style.width = `${size}px`;
+        galaxy.style.height = `${size}px`;
+        galaxy.style.background = `radial-gradient(circle, ${color}, transparent 70%)`;
+        galaxy.style.animationDuration = `${duration}s`;
+        
+        background.appendChild(galaxy);
+    }
+}
+
+// Tab-Funktionalität
+function initTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            btn.classList.add('active');
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+}
+
+// Slideshow-Funktionalität
+function initSlideshows() {
+    const slideshows = document.querySelectorAll('.slideshow-container');
+    
+    slideshows.forEach(slideshow => {
+        const slides = slideshow.querySelectorAll('.slide');
+        const dots = slideshow.querySelectorAll('.slideshow-dot');
+        const prevBtn = slideshow.querySelector('.prev-btn');
+        const nextBtn = slideshow.querySelector('.next-btn');
+        
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            if (index < 0) {
+                index = slides.length - 1;
+            } else if (index >= slides.length) {
+                index = 0;
+            }
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+    });
+}
+
+// Mobile Navigation
+function initMobileNav() {
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+}
+
+// Modal-Funktionalität für Events
+function initEventModals() {
+    const eventCards = document.querySelectorAll('.event-card');
+    const modals = document.querySelectorAll('.modal');
+    const closeButtons = document.querySelectorAll('.close-modal');
+    
+    // Event-Cards öffnen Modal
+    eventCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const eventId = card.getAttribute('data-event');
+            const modal = document.getElementById(`${eventId}-modal`);
+            if (modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+    
+    // Modal schließen mit X-Button
+    closeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const modal = e.target.closest('.modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+    });
+    
+    // Modal schließen bei Klick außerhalb
+    modals.forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Modal schließen mit Escape-Taste
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            modals.forEach(modal => {
+                if (modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    });
+}
+
+// Alles initialisieren
+window.addEventListener('load', () => {
+    createStars();
+    createShootingStars();
+    initTabs();
+    initSlideshows();
+    initMobileNav();
+    initEventModals();
+    createGalaxies();
+});
